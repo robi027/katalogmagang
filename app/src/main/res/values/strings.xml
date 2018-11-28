@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">KatalogMagang</string>
+    <string name="title_activity_maps_lokasi">Map</string>
+
+    <string name="action_setting">setting</string>
+    <string name="title_activity_daftar_tempat">DaftarTempat</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="deskripsi">Adalah Aplikasi memuat konten daftar tempat magang semua bidang keahlian</string>
+
+</resources>
