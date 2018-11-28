@@ -55,6 +55,7 @@ public class DaftarTempat extends AppCompatActivity
     ImageView img_load;
 
     Button kategori;
+    boolean doubleklikkeluar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,8 +149,19 @@ public class DaftarTempat extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else
-            super.onBackPressed();
-        return;
+            if (doubleklikkeluar){
+                super.onBackPressed();
+                return;
+            }
+            this.doubleklikkeluar = true;
+            Toast.makeText(this, "Please Click Back Again To Exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleklikkeluar=false;
+                }
+            }, 2000);
         }
 
     @Override
