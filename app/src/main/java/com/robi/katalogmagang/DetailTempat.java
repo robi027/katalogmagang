@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.robi.katalogmagang.API.Service;
 import com.robi.katalogmagang.Model.ModelData;
 
@@ -28,6 +30,11 @@ public class DetailTempat extends AppCompatActivity {
     TextView nm_tm, alamat_tm, ket_tm, team_recruitment, bidang;
     String title;
     String no_hp, email;
+
+    FloatingActionMenu floatingActionMenu;
+    FloatingActionButton floatingActionButton1;
+    FloatingActionButton floatingActionButton2;
+    FloatingActionButton floatingActionButton3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,7 @@ public class DetailTempat extends AppCompatActivity {
         bidang= (TextView) findViewById(R.id.bidang);
 
         bindData();
+        actionbutton();
     }
 
     private void bindData() {
@@ -82,6 +90,55 @@ public class DetailTempat extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ModelData>> call, Throwable t) {
+            }
+        });
+    }
+
+    public void actionbutton() {
+        floatingActionMenu = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
+        floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
+        floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
+
+        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + no_hp));
+                if (ActivityCompat.checkSelfPermission(DetailTempat.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                startActivity(intent);
+
+            }
+        });
+
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setType("vnd.android-dir/mms-sms");
+                intent.putExtra("address", no_hp);
+                intent.putExtra("sms_body","");
+                startActivity(intent);
+            }
+        });
+
+        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+                intent.setType("message/rcf822");
+                startActivity(Intent.createChooser(intent,"Kirim Email Menggunakan"));
             }
         });
     }
