@@ -45,6 +45,14 @@ public class ModelData {
     @Expose
     private String jumlah_like;
 
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    private String longitude;
+
 
     public static final String id_tmagang = "ID_TEMPATMAGANG";
     public static final String kategori = "KATEGORI";
@@ -126,6 +134,22 @@ public class ModelData {
 
     public void setJumlah_like(String jumlah_like) {
         this.jumlah_like = jumlah_like;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }
 

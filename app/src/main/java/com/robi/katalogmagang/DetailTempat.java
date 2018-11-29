@@ -13,6 +13,12 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.robi.katalogmagang.API.Service;
 import com.robi.katalogmagang.Model.ModelData;
 
@@ -24,12 +30,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DetailTempat extends AppCompatActivity {
+public class DetailTempat extends AppCompatActivity implements OnMapReadyCallback {
 
     String ID_TEMPATMAGANG;
     TextView nm_tm, alamat_tm, ket_tm, team_recruitment, bidang;
     String title;
     String no_hp, email;
+    double lat;
+    double lng;
+    private GoogleMap mMap;
 
     FloatingActionMenu floatingActionMenu;
     FloatingActionButton floatingActionButton1;
@@ -52,6 +61,9 @@ public class DetailTempat extends AppCompatActivity {
         ket_tm = (TextView) findViewById(R.id.ket_tm);
         team_recruitment = (TextView) findViewById(R.id.team_recruitment);
         bidang= (TextView) findViewById(R.id.bidang);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         bindData();
         actionbutton();
@@ -83,6 +95,14 @@ public class DetailTempat extends AppCompatActivity {
                         bidang.setText(response.body().get(i).getBidang());
                         no_hp = String.valueOf(response.body().get(i).getNo_hp());
                         email= String.valueOf(response.body().get(i).getEmail());
+
+                        lat = Double.valueOf(response.body().get(i).getLatitude());
+                        lng = Double.valueOf(response.body().get(i).getLongitude());
+                        title = nm_tm.getText().toString();
+
+                        LatLng a = new LatLng(lat, lng);
+                        mMap.addMarker(new MarkerOptions().position(a).title(title));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(a, 15));
 
                     }
                 }
@@ -151,6 +171,12 @@ public class DetailTempat extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        bindData();
     }
 }
 
